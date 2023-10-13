@@ -1,0 +1,17 @@
+package.json
+package-lock.json
+yarn.lock
+dist
+node_modules
+coverage
+out
+.github
+.next
+__mocks__
+*.yml
+*.less
+*.css
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map

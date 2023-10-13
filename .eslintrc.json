@@ -1,3 +1,13 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "plugins": ["prettier", "@typescript-eslint"],
+  "rules": {
+    "no-console": "error",    
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "import/order": ["error", { "groups": [["builtin", "external"], ["internal", "parent", "sibling", "index"]], "newlines-between": "always" }],
+    "react/function-component-definition": ["error", { "namedComponents": "function-declaration" }]
+  }
 }
