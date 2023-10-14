@@ -3,7 +3,6 @@
 import React from 'react';
 import { CandlestickSeries, Chart, ChartCanvas } from 'react-financial-charts';
 import { scaleTime } from 'd3-scale';
-import { financeEODDiscontinuousScale } from 'react-financial-charts/lib/scale';
 
 function CandlestickChart() {
   const candlestickData = [
