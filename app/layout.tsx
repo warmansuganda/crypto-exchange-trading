@@ -25,7 +25,7 @@ export default function RootLayout({
           'bg-slate-100 dark:bg-slate-800',
         )}
       >
-        <ThemeProvider attribute="class" enableSystem>
+        <ThemeProvider attribute="class" enableSystem={true}>
           {children}
         </ThemeProvider>
       </body>

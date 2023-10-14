@@ -10,12 +10,15 @@
     "lint:fix": "next lint --fix --dir ."
   },
   "dependencies": {
+    "@floating-ui/react": "^0.26.0",
     "@heroicons/react": "^2.0.18",
+    "@react-spring/web": "^9.7.3",
     "classnames": "^2.3.2",
     "next": "13.5.4",
     "next-themes": "^0.2.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-financial-charts": "^2.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
