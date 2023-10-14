@@ -33,7 +33,7 @@ function Dropdown({
     open: show ?? isOpen,
     onOpenChange: onToggle ?? setIsOpen,
     middleware: [
-      offset(offsetOptions ?? 20),
+      offset(offsetOptions ?? 15),
       size({
         apply({ rects }) {
           setElementRects(rects);
@@ -48,7 +48,7 @@ function Dropdown({
   const { getReferenceProps } = useInteractions([click, dismiss]);
 
   const { isMounted, styles } = useTransitionStyles(context, {
-    duration: 500,
+    duration: 200,
     initial: ({ side }) => ({
       opacity: 0,
       transform:

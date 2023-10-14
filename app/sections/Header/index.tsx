@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTheme } from 'next-themes';
+import classNames from 'classnames';
 
 import { MoonIcon, SunIcon } from '@/icons/outline';
 import { GithubIcon } from '@/icons/social';
@@ -17,15 +18,7 @@ function Header() {
     return theme;
   }, [theme, systemTheme]);
 
-  const renderThemeIcon = useCallback(
-    () =>
-      currentTheme === 'light' ? (
-        <SunIcon className="w-6 h-6" />
-      ) : (
-        <MoonIcon className="w-6 h-6" />
-      ),
-    [currentTheme],
-  );
+  const ThemeIcon = currentTheme === 'light' ? SunIcon : MoonIcon;
 
   return (
     <div className="h-10 bg-white dark:bg-gray-900 p-0.5 flex gap-0.5 justify-between items-center">
@@ -52,12 +45,19 @@ function Header() {
         <span className="text-sm font-semibold">Crypto Exchange Trading</span>
       </div>
       <div className="flex gap-2">
-        {hasMounted && (
+        {hasMounted ? (
           <Dropdown overlay={<ThemeSwither />} placement="bottom-end">
-            <button className="rounded-sm hover:text-sky-500 flex items-center justify-center gap-1 px-1 text-sm">
-              {renderThemeIcon()}
+            <button
+              className={classNames(
+                'rounded-sm hover:text-sky-500 flex items-center justify-center gap-1 px-1 text-sm',
+                theme !== 'system' && 'text-sky-500',
+              )}
+            >
+              <ThemeIcon className="w-6 h-6" />
             </button>
           </Dropdown>
+        ) : (
+          <div className="w-6 h-6 rounded-full bg-gray-200 animate-pulse" />
         )}
         <a
           href="https://github.com/warmansuganda/crypto-exchange-trading"
