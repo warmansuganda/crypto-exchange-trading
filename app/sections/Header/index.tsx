@@ -9,6 +9,7 @@ import { GithubIcon } from '@/icons/social';
 import Dropdown from '@/components/Dropdown';
 import ThemeSwither from './ThemeSwitcher';
 import useHasMounted from '@/hooks/useHasMounted';
+import CoinSwitcher from './CoinSwitcher';
 
 function Header() {
   const { theme, systemTheme } = useTheme();
@@ -43,6 +44,9 @@ function Header() {
           />
         </svg>
         <span className="text-sm font-semibold">Crypto Exchange Trading</span>
+      </div>
+      <div>
+        <CoinSwitcher />
       </div>
       <div className="flex gap-2">
         {hasMounted ? (
