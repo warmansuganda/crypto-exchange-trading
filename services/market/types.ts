@@ -1,3 +1,5 @@
+import { MARKET_DATASET } from '@/constants/market';
+
 export interface IOHLCData {
   readonly close: number;
   readonly date: Date;
@@ -6,3 +8,5 @@ export interface IOHLCData {
   readonly open: number;
   readonly volume: number;
 }
+
+export type MarketDataset = (typeof MARKET_DATASET)[number];

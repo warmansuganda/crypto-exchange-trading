@@ -25,12 +25,12 @@ import { format } from 'd3-format';
 import { timeFormat } from 'd3-time-format';
 import { useTheme } from 'next-themes';
 
-import { IOHLCData, useMarketData } from '../data';
 import { StockChartProps } from './types';
 import { darkChartStyle, lightChartStyle } from './styles';
-import Spinner from '@/components/Spinner';
+import { IOHLCData } from '@/services/market/types';
 
 function StockChart({
+  data: initialData,
   dateTimeFormat = "%d %b '%y \xa0 %H:%M",
   height = 320,
   width = 800,
@@ -48,10 +48,7 @@ function StockChart({
     crossHairStyles,
     movingAverageStyle,
   } = currentTheme === 'dark' ? darkChartStyle : lightChartStyle;
-  const { data: initialData, loaded } = useMarketData();
   const [resetCount, setResetCount] = useState(0);
-
-  if (!loaded || !height || !ratio || !width) return <Spinner />;
 
   const timeDisplayFormat = timeFormat(dateTimeFormat);
   const margin = { left: 0, right: 48, top: 0, bottom: 24 };

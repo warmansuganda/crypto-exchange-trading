@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import classNames from 'classnames';
 
-import { ThemeProvider } from '@/providers/ThemeProvider';
+import { AppProvider } from '@/providers/AppProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,9 +25,7 @@ export default function RootLayout({
           'bg-slate-100 dark:bg-slate-800',
         )}
       >
-        <ThemeProvider attribute="class" enableSystem={true}>
-          {children}
-        </ThemeProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

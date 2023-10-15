@@ -14,10 +14,12 @@ function Market() {
         />
       </div>
       <ul className="flex items-center gap-2 bg-slate-200/50 dark:bg-slate-800/50 px-1 text-sm dark:text-slate-500">
-        <li className="p-1">
+        <li className="p-1 cursor-pointer">
           <StarIcon className="w-3 h-3" />
         </li>
-        <li className="p-1 text-sky-500 dark:text-white font-semibold">BTC</li>
+        <li className="p-1 cursor-pointer text-sky-500 dark:text-white font-semibold">
+          BTC
+        </li>
         <li className="p-1">ETH</li>
         <li className="p-1">NEO</li>
         <li className="p-1">USTD</li>
