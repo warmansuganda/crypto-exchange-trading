@@ -9,7 +9,7 @@ import { ChevronDownIcon } from '@/icons/outline';
 import StockChart from './StockChart';
 import useDimensions from '@/hooks/useDimensions';
 import Spinner from '@/components/Spinner';
-import { getMarketData } from '@/services/market';
+import { getStockData } from '@/services/market';
 import { MarketDataset } from '@/services/market/types';
 import useInterval from '@/hooks/useInterval';
 import { MARKET_DATASET } from '@/constants/market';
@@ -21,7 +21,7 @@ function TradingChart() {
   const [length, setLength] = useState(500);
   const [chartRef, dimension] = useDimensions();
   const { data, isLoading } = useQuery(['getMarketData', dataset], () =>
-    getMarketData(dataset),
+    getStockData(dataset),
   );
 
   useInterval(() => {
