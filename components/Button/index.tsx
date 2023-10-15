@@ -22,7 +22,7 @@ const Button = forwardRef<
     <button
       ref={ref}
       className={classNames(
-        'mt-5 tracking-wide font-semibold w-full py-3 rounded-lg transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none shadow-[0px_0px_15px_0px_var(--tw-shadow-color)]',
+        'tracking-wide font-semibold w-full py-2 rounded-lg transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none shadow-[0px_0px_15px_0px_var(--tw-shadow-color)]',
         classVariant,
         className,
       )}
