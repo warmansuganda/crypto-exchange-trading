@@ -1,4 +1,4 @@
-import { IOHLCData } from '../data';
+import { IOHLCData } from '@/services/market/types';
 
 export interface StockChartProps {
   data?: IOHLCData[];

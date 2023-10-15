@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --dir .",
-    "lint:fix": "next lint --fix --dir ."
+    "lint:fix": "next lint --fix --dir .",
+    "ts": "tsc --noEmit"
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.0",
