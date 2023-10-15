@@ -14,6 +14,10 @@
     "@heroicons/react": "^2.0.18",
     "@react-spring/web": "^9.7.3",
     "classnames": "^2.3.2",
+    "d3-dsv": "^3.0.1",
+    "d3-format": "^3.1.0",
+    "d3-time": "^3.1.0",
+    "d3-time-format": "^4.1.0",
     "next": "13.5.4",
     "next-themes": "^0.2.1",
     "react": "^18",
@@ -21,6 +25,10 @@
     "react-financial-charts": "^2.0.1"
   },
   "devDependencies": {
+    "@types/d3-dsv": "^3.0.4",
+    "@types/d3-format": "^3.0.2",
+    "@types/d3-time": "^3.0.1",
+    "@types/d3-time-format": "^4.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
