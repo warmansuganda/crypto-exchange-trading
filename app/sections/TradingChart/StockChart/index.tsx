@@ -28,6 +28,7 @@ import { useTheme } from 'next-themes';
 import { IOHLCData, useMarketData } from '../data';
 import { StockChartProps } from './types';
 import { darkChartStyle, lightChartStyle } from './styles';
+import Spinner from '@/components/Spinner';
 
 function StockChart({
   dateTimeFormat = "%d %b '%y \xa0 %H:%M",
@@ -50,7 +51,7 @@ function StockChart({
   const { data: initialData, loaded } = useMarketData();
   const [resetCount, setResetCount] = useState(0);
 
-  if (!loaded || !height || !ratio || !width) return null;
+  if (!loaded || !height || !ratio || !width) return <Spinner />;
 
   const timeDisplayFormat = timeFormat(dateTimeFormat);
   const margin = { left: 0, right: 48, top: 0, bottom: 24 };

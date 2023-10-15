@@ -23,7 +23,7 @@ function TradingChart() {
           <ChevronDownIcon className="w-4 h-4" />
         </button>
       </div>
-      <div ref={chartRef} className="h-full">
+      <div ref={chartRef} className="h-full relative">
         <StockChart width={dimension.width} height={dimension.height} />
       </div>
     </div>
