@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import classNames from 'classnames';
 
-import { ChevronDownIcon } from '@/icons/outline';
+import { ChevronDownIcon, MagnifyingGlassIcon } from '@/icons/outline';
 import Modal from '@/components/Modal';
+import Input from '@/components/Input';
+import { getMarketData } from '@/services/market';
 
 function CoinSwitcher() {
+  const selected = 'btc';
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState<string>('');
+  const { data: marketData } = useQuery(
+    ['getMarketData', selected],
+    () =>
+      getMarketData({
+        vs_currency: selected as string,
+        per_page: 20,
+        page: 1,
+      }),
+    {
+      enabled: show,
+    },
+  );
   return (
     <>
       <button
@@ -18,22 +36,61 @@ function CoinSwitcher() {
       </button>
 
       <Modal title="Search Crypto" show={show} onClose={() => setShow(false)}>
-        <div className="p-6 space-y-6">
-          <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-            With less than a month to go before the European Union enacts new
-            consumer privacy laws for its citizens, companies around the world
-            are updating their terms of service agreements to comply.
-          </p>
-          <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-            The European Union’s General Data Protection Regulation (G.D.P.R.)
-            goes into effect on May 25 and is meant to ensure a common set of
-            data rights in the European Union. It requires organizations to
-            notify users as soon as possible of high-risk data breaches that
-            could personally affect them.
-          </p>
-        </div>
-        <div className="text-center text-[10px] p-2 text-gray-500 border-t border-gray-200 rounded-b dark:border-gray-600">
-          Simply start typing while on the chart to pull up this search box
+        <div className="flex flex-col h-[calc(100vh-20rem)]">
+          <div className="p-2">
+            <Input
+              placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              leftAccessory={<MagnifyingGlassIcon className="h-5 w-5" />}
+            />
+          </div>
+          <hr className="dark:border-gray-600" />
+          <div className="flex-auto h-0 overflow-y-auto">
+            <table className="w-full text-xs">
+              <thead className="sticky top-0 bg-white dark:bg-gray-700 z-10">
+                <tr>
+                  <th className="p-3 text-left">SYMBOL</th>
+                  <th className="p-3 text-left">DESCRIPTION</th>
+                  <th className="p-3 text-righ">LAST PRICE</th>
+                  <th className="p-3 text-righ">CHANGE</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y dark:divide-slate-800/50">
+                {marketData?.map((item, index) => (
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-100 hover:dark:bg-gray-600 cursor-pointer"
+                    onClick={() => setShow(false)}
+                  >
+                    <td className="p-3 text-left uppercase">
+                      <div className="flex items-center gap-2">
+                        <div className="relative h-6 w-6 rounded-full overflow-hidden">
+                          <Image src={item.image} fill alt="image" />
+                        </div>
+                        <span>{item.symbol}</span>
+                      </div>
+                    </td>
+                    <td className="p-3 text-left">{item.name}</td>
+                    <td className="p-3 text-right">{item.current_price}</td>
+                    <td
+                      className={classNames(
+                        'text-right px-4 py-2',
+                        item.price_change_percentage_24h < 0
+                          ? 'text-red-600'
+                          : 'text-green-600',
+                      )}
+                    >
+                      {item.price_change_percentage_24h}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="text-center text-[10px] p-2 text-gray-500 border-t border-gray-200 rounded-b dark:border-gray-600">
+            Simply start typing while on the chart to pull up this search box
+          </div>
         </div>
       </Modal>
     </>
