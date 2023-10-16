@@ -69,7 +69,7 @@ function Dropdown({
       {isMounted && (
         <FloatingPortal>
           <div
-            className="w-fit"
+            className="w-fit z-50"
             ref={refs.setFloating}
             style={floatingStyles}
             onClick={() => setIsOpen(!isOpen)}

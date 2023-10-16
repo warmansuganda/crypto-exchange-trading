@@ -43,7 +43,9 @@ function Header() {
             stroke="#dc2626"
           />
         </svg>
-        <span className="text-sm font-semibold">Crypto Exchange Trading</span>
+        <span className="text-sm font-semibold hidden md:block">
+          Crypto Exchange Trading
+        </span>
       </div>
       <div>
         <CoinSwitcher />

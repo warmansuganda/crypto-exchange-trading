@@ -9,7 +9,7 @@ export default function Home() {
     <main className="h-screen w-screen flex flex-col gap-1">
       <Header />
       <div className="flex-1 flex gap-1">
-        <div className="bg-white dark:bg-gray-900 rounded-tr w-80">
+        <div className="bg-white dark:bg-gray-900 rounded-tr w-80 hidden md:block">
           <OrderBook />
         </div>
         <div className="flex-1 flex flex-col gap-1">
@@ -20,7 +20,7 @@ export default function Home() {
             <Spot />
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-900 rounded-tl w-80">
+        <div className="bg-white dark:bg-gray-900 rounded-tl w-80 hidden md:block">
           <Market />
         </div>
       </div>
