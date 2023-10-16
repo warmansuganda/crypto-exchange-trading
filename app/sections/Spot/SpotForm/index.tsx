@@ -6,6 +6,7 @@ import Input from '@/components/Input';
 import { SpotFormInput, SpotFormProps } from './types';
 import Button from '@/components/Button';
 import useSocket from '@/hooks/useSocket';
+import Progress from '@/components/Progress';
 
 function SpotForm({ type }: SpotFormProps) {
   const {
@@ -16,11 +17,20 @@ function SpotForm({ type }: SpotFormProps) {
   } = useForm<SpotFormInput>();
   const { sendMessage } = useSocket();
 
+  const available = 60;
   const price = watch('price');
   const amount = watch('amount');
+
   const total = useMemo(() => {
     return (price ?? 0) * (amount ?? 0);
   }, [amount, price]);
+
+  const percentage = useMemo(() => {
+    if (total > 0) {
+      return (total / available) * 100;
+    }
+    return 0;
+  }, [total]);
 
   const onSubmit: SubmitHandler<SpotFormInput> = (data) => {
     sendMessage(
@@ -33,6 +43,10 @@ function SpotForm({ type }: SpotFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex justify-between text-xs mb-1">
+        <div className="dark:text-slate-500">Avlb</div>
+        <div>{available} BTC</div>
+      </div>
       <div className="space-y-3">
         <Input
           type="number"
@@ -50,14 +64,7 @@ function SpotForm({ type }: SpotFormProps) {
         />
       </div>
       <div className="mt-2 mb-4">
-        {[25, 50, 75, 100].map((item) => (
-          <span
-            key={item}
-            className="bg-gray-100 text-gray-800 text-xs mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
-          >
-            {item}%
-          </span>
-        ))}
+        <Progress value={percentage} />
       </div>
       <div>
         <Input
