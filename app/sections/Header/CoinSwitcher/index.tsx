@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
@@ -7,16 +7,17 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@/icons/outline';
 import Modal from '@/components/Modal';
 import Input from '@/components/Input';
 import { getMarketData } from '@/services/market';
+import { MarketData } from '@/services/market/types';
 
 function CoinSwitcher() {
-  const selected = 'btc';
+  const [selected, setSelected] = useState<MarketData>();
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState<string>('');
-  const { data: marketData } = useQuery(
-    ['getMarketData', selected],
+  const { data: marketData, isLoading } = useQuery(
+    ['getMarketData', 'btc'],
     () =>
       getMarketData({
-        vs_currency: selected as string,
+        vs_currency: 'btc',
         per_page: 20,
         page: 1,
       }),
@@ -24,14 +25,33 @@ function CoinSwitcher() {
       enabled: show,
     },
   );
+
+  const currentMarket = useMemo(
+    () => (!selected ? marketData?.[0] : selected),
+    [selected, marketData],
+  );
+
+  if (isLoading)
+    return (
+      <div className="h-7 w-40 bg-gray-200 dark:bg-slate-700 animate-pulse rounded-full" />
+    );
+
   return (
     <>
       <button
         onClick={() => setShow(true)}
         className="text-xs leading-5 font-medium text-sky-600 dark:text-sky-400 bg-sky-400/10 rounded-full py-1 px-2 flex gap-2 items-center hover:bg-sky-400/20 w-fit"
       >
-        <Image src="/images/crypto/btc.svg" width={16} height={16} alt="btc" />
-        <span>Bitcoin / U.S. Dollar</span>
+        <Image
+          src={currentMarket?.image ?? ''}
+          width={16}
+          height={16}
+          alt="btc"
+        />
+        <span>
+          <span className="uppercase">{currentMarket?.symbol}</span> /
+          <span className="ml-1">{currentMarket?.name}</span>
+        </span>
         <ChevronDownIcon className="w-4 h-4" />
       </button>
 
@@ -61,7 +81,10 @@ function CoinSwitcher() {
                   <tr
                     key={index}
                     className="hover:bg-gray-100 hover:dark:bg-gray-600 cursor-pointer"
-                    onClick={() => setShow(false)}
+                    onClick={() => {
+                      setShow(false);
+                      setSelected(item);
+                    }}
                   >
                     <td className="p-3 text-left uppercase">
                       <div className="flex items-center gap-2">

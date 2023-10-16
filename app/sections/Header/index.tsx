@@ -63,7 +63,7 @@ function Header() {
             </button>
           </Dropdown>
         ) : (
-          <div className="w-6 h-6 rounded-full bg-gray-200 animate-pulse" />
+          <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-slate-700 animate-pulse" />
         )}
         <a
           href="https://github.com/warmansuganda/crypto-exchange-trading"
