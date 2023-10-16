@@ -5,9 +5,26 @@ import classNames from 'classnames';
 
 import { ArrowDownIcon, ChevronDownIcon } from '@/icons/outline';
 import Dropdown from '@/components/Dropdown';
+import useSocket from '@/hooks/useSocket';
+import { OrderBookData } from '@/services/orderBook/types';
 
 function OrderBook() {
   const [selected, setSelected] = useState<number>(1);
+  const [buy, setBuy] = useState<OrderBookData[]>([]);
+  const [sell, setSell] = useState<OrderBookData[]>([]);
+  useSocket({
+    onMessage: (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'buy') {
+          setBuy((prev) => [...prev, data.data]);
+        } else if (data.type === 'sell') {
+          setSell((prev) => [...prev, data.data]);
+        }
+      } catch (error) {}
+    },
+  });
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex justify-between items-center p-1">
@@ -54,18 +71,16 @@ function OrderBook() {
             </tr>
           </thead>
           <tbody className="divide-y dark:divide-slate-800/50">
-            {Array(10)
-              .fill(1)
-              .map((_, index) => (
-                <tr
-                  key={index}
-                  className="bg-gradient-to-l from-red-600/10 to-transparent"
-                >
-                  <td className="text-red-600 px-4 py-2">39043.07</td>
-                  <td className="px-4 py-2 text-right">26.15582</td>
-                  <td className="text-right px-4 py-2 ">1,021,203.51117</td>
-                </tr>
-              ))}
+            {sell.map((item, index) => (
+              <tr
+                key={index}
+                className="bg-gradient-to-l from-red-600/10 to-transparent"
+              >
+                <td className="text-red-600 px-4 py-2">{item.price}</td>
+                <td className="px-4 py-2 text-right">{item.amount}</td>
+                <td className="text-right px-4 py-2 ">{item.total}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -76,18 +91,16 @@ function OrderBook() {
       <div className="flex-[1_1_auto] h-0 overflow-y-auto">
         <table className="w-full text-xs">
           <tbody className="divide-y dark:divide-slate-800/50">
-            {Array(10)
-              .fill(1)
-              .map((_, index) => (
-                <tr
-                  key={index}
-                  className="bg-gradient-to-l from-green-600/10 to-transparent"
-                >
-                  <td className="text-green-600 px-4 py-2">39043.07</td>
-                  <td className="px-4 py-2 text-right">26.15582</td>
-                  <td className="text-right px-4 py-2 ">1,021,203.51117</td>
-                </tr>
-              ))}
+            {buy.map((item, index) => (
+              <tr
+                key={index}
+                className="bg-gradient-to-l from-green-600/10 to-transparent"
+              >
+                <td className="text-green-600 px-4 py-2">{item.price}</td>
+                <td className="px-4 py-2 text-right">{item.amount}</td>
+                <td className="text-right px-4 py-2 ">{item.total}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

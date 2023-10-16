@@ -1,20 +1,34 @@
 'use client';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Input from '@/components/Input';
 import { SpotFormInput, SpotFormProps } from './types';
 import Button from '@/components/Button';
+import useSocket from '@/hooks/useSocket';
 
 function SpotForm({ type }: SpotFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<SpotFormInput>();
+  const { sendMessage } = useSocket();
+
+  const price = watch('price');
+  const amount = watch('amount');
+  const total = useMemo(() => {
+    return (price ?? 0) * (amount ?? 0);
+  }, [amount, price]);
+
   const onSubmit: SubmitHandler<SpotFormInput> = (data) => {
-    // TODO: processing data
-    alert(JSON.stringify(data));
+    sendMessage(
+      JSON.stringify({
+        type,
+        data: { ...data, total },
+      }),
+    );
   };
 
   return (
@@ -45,19 +59,14 @@ function SpotForm({ type }: SpotFormProps) {
           </span>
         ))}
       </div>
-      <div className="text-xs space-y-1">
-        <p className="flex justify-between items-center">
-          Available: <span>0 BTC = 0 USD</span>
-        </p>
-        <p className="flex justify-between items-center">
-          Volume: <span>0 BTC = 0 USD</span>
-        </p>
-        <p className="flex justify-between items-center">
-          Margin: <span>0 BTC = 0 USD</span>
-        </p>
-        <p className="flex justify-between items-center">
-          Fee: <span>0 BTC = 0 USD</span>
-        </p>
+      <div>
+        <Input
+          type="number"
+          readOnly
+          value={total > 0 ? total : undefined}
+          rightAccessory="BTC"
+          placeholder="Total"
+        />
       </div>
       <Button
         variant={type === 'buy' ? 'green' : 'red'}
